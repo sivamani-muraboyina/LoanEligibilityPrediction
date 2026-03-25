@@ -1,5 +1,5 @@
 import joblib
-from src.preprocess import preprocess_input
+from preprocess import preprocess_input
 
 
 # load trained model
