@@ -1,24 +1,49 @@
 import joblib
 from preprocess import preprocess_input
 
+# for logging and exception
+from src.logger import logging
+from src.exception import CustomException
+import sys
+
 
 # load trained model
-model = joblib.load("models/loan_model.pkl")
+try:
+    logging.info("Loading the model")
+    model = joblib.load("models/loan_model.pkl")
+    logging.info("model loaded successfully")
+except Exception as e:
+    logging.error("Error occured in loading the model")
+    raise CustomException(e,sys)
 
 
 # prediction function
 def predict(input_dict):
-    # preprocess input
-    processed_data = preprocess_input(input_dict)
+    try:
+        logging.info("Prediction pipeline has started ")
+        logging.info(" preprocessing input data ")
+
+        processed_data = preprocess_input(input_dict) 
+
+        logging .info("preprocessing done successfully") 
+        logging.info("model prediction ")
+        
+        prediction = model.predict(processed_data)[0]
+
+        logging.info("prediction has done successfully")
     
-    # get prediction
-    prediction = model.predict(processed_data)[0]
     
-    # convert to readable output
-    if prediction == 1:
-        return "Loan Approved"
-    else:
-        return "Loan Rejected"
+
+        if prediction == 1:
+          return "Loan Approved"
+        else:
+          return "Loan Rejected"
+        
+    except Exception as e:
+        logging.error("Error occured in prediction pipeline")
+        raise CustomException(e,sys)
+    
+    
 
 
 # test run

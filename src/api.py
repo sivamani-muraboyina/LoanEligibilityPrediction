@@ -3,11 +3,22 @@ from pydantic import BaseModel
 import joblib
 from src.preprocess import preprocess_input
 
+from src.logger import logging
+from src.exception import CustomException
+import sys
+
 # create app
 app = FastAPI()
 
 # load model
-model = joblib.load("models/loan_model.pkl")
+try:
+    logging.info("Loading the model")
+    model = joblib.load("models/loan_model.pkl")
+    logging.info("model loaded successfully")
+except Exception as e:
+    logging.error("Error while loading the model")
+    raise CustomException(e,sys)
+    
 
 # request schema
 class LoanInput(BaseModel):
@@ -31,16 +42,26 @@ def home():
 # prediction route
 @app.post("/predict")
 def predict(data: LoanInput):
-    input_dict = data.dict()
+    try:
+        logging.info("request recievde at /predict endpoint")
 
-    processed_data = preprocess_input(input_dict)
+        input_dict = data.dict()
+        logging.info("Preprocessing the input dict")
+        processed_data = preprocess_input(input_dict)
+        logging.info(" preprocessing done successfully")
 
-    prediction = model.predict(processed_data)[0]
-    probability = model.predict_proba(processed_data)[0][1]
+        logging.info("Model prediction started")
+        prediction = model.predict(processed_data)[0]
+        probability = model.predict_proba(processed_data)[0][1]
+        logging.info(" Model prediction is done")
 
-    result = "Loan Approved" if prediction == 1 else "Loan Rejected"
+        result = "Loan Approved" if prediction == 1 else "Loan Rejected"
 
-    return {
-        "prediction": result,
-        "probability": round(float(probability), 3)
-    }
+        return {
+            "prediction": result,
+            "probability": round(float(probability), 3)
+        }
+    except Exception as e:
+        logging.error("Error occured in prediction endpoint")
+        raise CustomException(e,sys)
+
