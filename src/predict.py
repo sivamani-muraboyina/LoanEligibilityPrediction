@@ -1,5 +1,5 @@
 import joblib
-from preprocess import preprocess_input
+from src.preprocess import preprocess_input
 
 # for logging and exception
 from src.logger import logging

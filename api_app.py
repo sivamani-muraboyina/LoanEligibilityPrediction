@@ -1,6 +1,6 @@
 import streamlit as st
-#import requests
-from src.predict import predict
+import requests
+
 
 st.title("Loan Eligibility Prediction")
 
@@ -36,24 +36,19 @@ if st.button("Predict"):
         "Credit_History": credit,
         "Property_Area": property_area
     }
-    try:
-       
-        result = predict(data)
-        st.success(f"Prediction: {result}")
-    except Exception as e:
-        st.error("Prediction failed")
+    
 
 
      
 
-# try:
-#    response = requests.post("http://127.0.0.1:8000/predict", json=data)
+    try:
+        response = requests.post("http://127.0.0.1:8000/predict", json=data)
 
- #       if response.status_code == 200:
-  #          result = response.json()
-  #          st.success(f"Prediction: {result['prediction']}")
-   #     else:
-   #         st.error("Error from API")
+        if response.status_code == 200:
+            result = response.json()
+            st.success(f"Prediction: {result['prediction']}")
+        else:
+            st.error("Error from API")
 
-    #except Exception as e:
-      #  st.error("API not running. Start FastAPI server.")
+    except Exception as e:
+        st.error("API not running. Start FastAPI server.")
