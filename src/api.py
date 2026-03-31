@@ -6,18 +6,28 @@ from src.preprocess import preprocess_input
 from src.logger import logging
 from src.exception import CustomException
 import sys
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # create app
 app = FastAPI()
 
+
 # load model
 try:
-    logging.info("Loading the model")
-    model = joblib.load("models/loan_model.pkl")
-    logging.info("model loaded successfully")
+    logging.info("Loading model")
+
+    
+    MODEL_PATH = os.path.join(BASE_DIR, "../models/loan_model.pkl")
+
+    model = joblib.load(MODEL_PATH)
+
+    logging.info("Model loaded successfully")
+
 except Exception as e:
-    logging.error("Error while loading the model")
-    raise CustomException(e,sys)
+    logging.error("Error occurred while loading model")
+    raise CustomException(e, sys)
+
     
 
 # request schema

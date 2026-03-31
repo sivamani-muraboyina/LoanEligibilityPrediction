@@ -5,27 +5,40 @@ import joblib
 from src.logger import logging
 from src.exception import CustomException
 import sys
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 # load saved artifacts (trained during model building)
 try:
     logging.info(" loading the standard scaler")
-    scaler = joblib.load("models/scaler.pkl")
+
+    scaler_path = os.path.join(BASE_DIR, "../models/scaler.pkl")
+    scaler = joblib.load(scaler_path)
+
     logging.info(" scaler loading done succesfully")
 except Exception as e:
     logging.error("Error while loading standard scler")
     raise CustomException(e,sys)
+
 try:
     logging.info("loading the columns required for model")
-    model_columns = joblib.load("models/columns.pkl")
+
+    columns_path = os.path.join(BASE_DIR, "../models/columns.pkl")
+    model_columns = joblib.load(columns_path)
+
     logging.info("Model_columns loaded sucessfully")
 except Exception as e:
     logging.error("error while loading model _columns")
     raise CustomException(e,sys)
 
-encoder = joblib.load("models/encoder.pkl")
+
 try:
     logging.info("loading the encoder has started")
-    encoder = joblib.load("models/encoder.pkl")
+
+    encoder_path = os.path.join(BASE_DIR, "../models/encoder.pkl")
+    encoder = joblib.load(encoder_path)
+
     logging.info("Encoder loaded sucessfully")
 except Exception as e:
     logging.error("error while loading encoder")

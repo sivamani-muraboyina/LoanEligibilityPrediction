@@ -6,11 +6,17 @@ from src.logger import logging
 from src.exception import CustomException
 import sys
 
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 # load trained model
 try:
     logging.info("Loading the model")
-    model = joblib.load("models/loan_model.pkl")
+
+    MODEL_PATH = os.path.join(BASE_DIR, "../models/loan_model.pkl")
+    model = joblib.load(MODEL_PATH)
+    
     logging.info("model loaded successfully")
 except Exception as e:
     logging.error("Error occured in loading the model")
