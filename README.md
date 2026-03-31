@@ -42,7 +42,7 @@ This project aims to automate decision-making using machine learning to:
 
 ## 📊 Model Performance
 
-*(Fill these after checking your notebook)*
+
 
 - Accuracy: 81%  
 - Precision: 81%  
@@ -87,9 +87,11 @@ This project aims to automate decision-making using machine learning to:
 ---
 
 ## 📦 Project Structure
-
+```bash
 LoanEligibilityPrediction/
 │
+|___api_app.py
+|
 ├── app.py # Streamlit app
 ├── requirements.txt
 ├── Dockerfile
@@ -109,6 +111,7 @@ LoanEligibilityPrediction/
 ├── assets/
 │ ├── home.png
 │ ├── prediction.png
+```
 
 
 
@@ -117,31 +120,37 @@ LoanEligibilityPrediction/
 ## ▶️ How to Run Locally
 
 ### 1. Clone repo
-
+```bash
 git clone <https://github.com/sivamani-muraboyina/LoanEligibilityPrediction>
 cd LoanEligibilityPrediction
+```
 
 ### 2.Create your own environment
-
+```bash
 python -m venv venv
 venv\Scripts\activate
+```
 
 ### 3. Install Dependencies
-
+```bash
 pip install -r requirements.txt
+```
 
 ### 4.Run app
-
+```bash
 streamlit run app.py
+```
 
 ## DockerSupport
 ### 5.Build Image
-
+```bash
 docker build -t loan-app .
+```
 
 ### 6.Run Container
-
+``` bash
 docker run -p 8501:8501 loan-app
+```
 
 ## Deployment 
 
