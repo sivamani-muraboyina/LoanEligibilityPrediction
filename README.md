@@ -49,7 +49,8 @@ Property Area
 🔹 Output
 Loan Approved / Not Approved
 
-📸 (Add screenshot here)
+![Home](assets/home.png)
+![Prediction](assets/prediction.png)
 
 🐳 Docker Support
 
