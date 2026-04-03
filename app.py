@@ -43,14 +43,16 @@ if st.button("Predict"):
     except Exception as e:
         st.error("Prediction failed")
 
-if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 7860))
-    import streamlit.web.cli as stcli
-    import sys
+# fixing duplicate streamlit run time issue 
+#if __name__ == "__main__":
+#    import os
+#    port = int(os.environ.get("PORT", 7860))
+#    import streamlit.web.cli as stcli
+#    import sys
 
-    sys.argv = ["streamlit", "run", "app.py", "--server.port", str(port), "--server.address", "0.0.0.0"]
-    stcli.main()
+ #   sys.argv = ["streamlit", "run", "app.py", "--server.port", str(port), "--server.address", "0.0.0.0"]
+#    stcli.main()
+
 
 
      
